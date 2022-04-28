@@ -66,6 +66,11 @@ namespace Flocking {
             }
         }
 
+        public Vector2 GetForwardVelocity()
+        {
+            return transform.forward;
+        }
+        
         public float SelfRadius {
             get {
                 return selfRadius;

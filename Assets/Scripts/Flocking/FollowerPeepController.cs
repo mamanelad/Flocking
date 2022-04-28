@@ -23,6 +23,8 @@ namespace Flocking
         private Vector3 avgDirectionAlignment;
         private Vector3 avgDirectionCohesion;
 
+        private int peepCount = 0;
+
 
         private static readonly Collider[] COLLIDER_RESULTS = new Collider[10];
 
@@ -120,12 +122,20 @@ namespace Flocking
 
         private void Cohesion()
         {
-            return;
+            if (curColliderHit.CompareTag(peepTag))
+            {
+                var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
+                if (otherPeed.Group != peep.Group) return;
+                avgDirectionCohesion += curColliderHit.transform.position;
+                peepCount++;
+            }
+            
+
         }
 
         private void FinalDirection()
         {
-            avgDirectionMain = avgDirectionSeparation;
+            avgDirectionMain = avgDirectionCohesion;
         }
 
 
@@ -158,9 +168,11 @@ namespace Flocking
                 if (curColliderHit.attachedRigidbody != null &&
                     curColliderHit.attachedRigidbody.gameObject == peep.gameObject) continue;
 
+                //Alignment();
                 Separation();
-                Alignment();
                 Cohesion();
+                avgDirectionCohesion /= peepCount;
+                avgDirectionCohesion = (avgDirectionCohesion - position);
             }
 
 
