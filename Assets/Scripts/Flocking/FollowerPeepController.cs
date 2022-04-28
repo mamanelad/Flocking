@@ -17,13 +17,14 @@ namespace Flocking
 
 
         private Collider curColliderHit;
+        private int hits; // Save the amount of colliders stored into the results buffer of the Sphere.
 
+        [SerializeField] private float alignmentFactor = 1f;  
+        
         private Vector3 avgDirectionMain;
         private Vector3 avgDirectionSeparation;
         private Vector3 avgDirectionAlignment;
         private Vector3 avgDirectionCohesion;
-
-        private int peepCount = 0;
 
 
         private static readonly Collider[] COLLIDER_RESULTS = new Collider[10];
@@ -117,7 +118,19 @@ namespace Flocking
 
         private void Alignment()
         {
-            return;
+            if (curColliderHit.CompareTag(peepTag))
+            {
+                // Sensed another peep.
+                var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
+                // Ignore peeps that are not from this group.
+                if (otherPeed.Group != peep.Group) return;
+
+                //option 1 for alignment
+                // avgDirectionAlignment += otherPeed.GetForwardVelocity();
+                
+                //option 2 for alignment
+                avgDirectionAlignment += (Vector3) otherPeed.Velocity;
+            }
         }
 
         private void Cohesion()
@@ -127,15 +140,30 @@ namespace Flocking
                 var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
                 if (otherPeed.Group != peep.Group) return;
                 avgDirectionCohesion += curColliderHit.transform.position;
-                peepCount++;
             }
-            
-
         }
 
         private void FinalDirection()
         {
-            avgDirectionMain = avgDirectionCohesion;
+            //Final calculation for the Alignment vector.
+            //option 1 for alignment
+            // avgDirectionAlignment.x /= hits;
+            // avgDirectionAlignment.y /= hits;
+            
+            //If we want to normalize them. 
+            // avgDirectionSeparation.Normalize();
+            // avgDirectionAlignment.Normalize();
+            // avgDirectionCohesion.Normalize();
+            
+            avgDirectionAlignment = new Vector3(avgDirectionAlignment.x * alignmentFactor,
+                avgDirectionAlignment.y * alignmentFactor, avgDirectionAlignment.z * alignmentFactor);
+
+            //Final calculation for the Cohesion vector.
+            avgDirectionCohesion /= hits;
+            avgDirectionCohesion = (avgDirectionCohesion - transform.position);
+            
+            
+            avgDirectionMain = avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion;
         }
 
 
@@ -147,7 +175,7 @@ namespace Flocking
             var position = peep.Position;
 
             // Check for colliders in the sense radius.
-            var hits = Physics.OverlapSphereNonAlloc(
+            hits = Physics.OverlapSphereNonAlloc(
                 position,
                 senseRadius,
                 COLLIDER_RESULTS,
@@ -155,6 +183,7 @@ namespace Flocking
 
             // There will always be at least one hit on our own collider.
             if (hits <= 1) return;
+
 
             avgDirectionMain = Vector3.zero;
             avgDirectionSeparation = Vector3.zero;
@@ -168,14 +197,14 @@ namespace Flocking
                 if (curColliderHit.attachedRigidbody != null &&
                     curColliderHit.attachedRigidbody.gameObject == peep.gameObject) continue;
 
-                //Alignment();
                 Separation();
+                Alignment();
                 Cohesion();
-                avgDirectionCohesion /= peepCount;
-                avgDirectionCohesion = (avgDirectionCohesion - position);
             }
 
 
+            
+            
             FinalDirection();
             if (avgDirectionMain.sqrMagnitude < 0.1f) return;
 
@@ -194,3 +223,8 @@ namespace Flocking
         }
     }
 }
+
+
+
+
+
