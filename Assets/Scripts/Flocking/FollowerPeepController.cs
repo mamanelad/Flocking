@@ -126,7 +126,7 @@ namespace Flocking
                 if (otherPeed.Group != peep.Group) return;
 
                 //option 1 for alignment
-                // avgDirectionAlignment += otherPeed.GetForwardVelocity();
+                // avgDirectionAlignment +=  (Vector3) otherPeed.GetForwardVelocity();
                 
                 //option 2 for alignment
                 avgDirectionAlignment += (Vector3) otherPeed.Velocity;
@@ -164,6 +164,7 @@ namespace Flocking
             
             
             avgDirectionMain = avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion;
+            print(avgDirectionMain);
         }
 
 
