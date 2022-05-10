@@ -164,7 +164,6 @@ namespace Flocking
             
             
             avgDirectionMain = avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion;
-            print(avgDirectionMain);
         }
 
 
