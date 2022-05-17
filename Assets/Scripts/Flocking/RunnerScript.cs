@@ -6,7 +6,7 @@ using BitStrap;
 
 namespace Flocking
 {
-    public class FollowerPeepController : MonoBehaviour
+    public class RunnerScript : MonoBehaviour
     {
         [SerializeField] PeepController peep;
         [SerializeField] float senseRadius = 2f;
@@ -28,6 +28,7 @@ namespace Flocking
 
 
         private static readonly Collider[] COLLIDER_RESULTS = new Collider[10];
+        private static Collider[] hitsCollider = new Collider[10];
 
         protected void Reset()
         {
@@ -167,6 +168,29 @@ namespace Flocking
         }
 
 
+        void RunFromCatcher()
+        {
+            var catchers = new Collider[5];
+
+            // Check for colliders in the sense radius.
+            hits = Physics.OverlapSphereNonAlloc(
+                peep.Position,
+                senseRadius,
+                hitsCollider,
+                navigationMask.value);
+            
+            if (hits <= 1) return;
+            for (int i = 0; i < hits; i++)
+            {
+                var hitPeed = hitsCollider[i].attachedRigidbody.GetComponent<PeepController>();
+                if (hitPeed.Group == 0)
+                {
+                    catchers[i] = hitsCollider[i];
+                }
+            }
+        }
+        
+        
         protected void Update()
         {
             if (navigationTimer.IsActive) return;
@@ -183,8 +207,7 @@ namespace Flocking
 
             // There will always be at least one hit on our own collider.
             if (hits <= 1) return;
-
-
+            
             avgDirectionMain = Vector3.zero;
             avgDirectionSeparation = Vector3.zero;
             avgDirectionAlignment = Vector3.zero;
@@ -196,14 +219,11 @@ namespace Flocking
                 // Ignore self.
                 if (curColliderHit.attachedRigidbody != null &&
                     curColliderHit.attachedRigidbody.gameObject == peep.gameObject) continue;
-
+                
                 Separation();
                 Alignment();
                 Cohesion();
             }
-
-
-            
             
             FinalDirection();
             if (avgDirectionMain.sqrMagnitude < 0.1f) return;
@@ -223,6 +243,7 @@ namespace Flocking
         }
     }
 }
+
 
 
 
