@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Asteroid
+  m_Shader: {fileID: -6465566751694194690, guid: 656bf76e396764049a4f8cf13bc3f466, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_118cc25315364da4bad4d53f320dfb9b:
+        m_Texture: {fileID: 2800000, guid: 320af5e721c83bd4ca5f924accc7da41, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1234c32209bd4fbe821af110460d4ede: 1.32
+    - Vector1_2a4d7b52fcea48c2a3b6746d10d54932: 5.14
+    - Vector1_5984c4412a144617a4d37ae7c382d6ef: 25
+    - Vector1_8185aca49e624a2ebe162b715eab39bd: 3
+    - Vector1_91839d68c6164336aedde5828bd1b2d6: 6
+    - Vector1_d13b6a9e48da49dd86bbd72ecbc4ebb3: 1.74
+    - Vector1_d742c3c0cc46404194c47c6386917f2b: 1.6
+    - Vector1_e2885b7ec8614e4cb8f730ee84ecbd27: 3
+    m_Colors:
+    - Color_053b79a5f361454ebf34e6d38f110f6c: {r: 28.679245, g: 7.2932734, b: 3.111428, a: 0}
+    - Color_25902cdff6514e8995d6831bc7e05e59: {r: 53.735847, g: 12.233556, b: 4.309007, a: 0}
+    - Color_f9673bc65a844e41b55963861490a39c: {r: 0.85064435, g: 0.8867924, b: 0.071110725, a: 0}
+    - Vector2_226cbb87af2a41a382aa8eeb6e3952af: {r: 0.1, g: 0, b: 0, a: 0}
+    - Vector2_80c4338bb711408b81afb6845f97af25: {r: -0.1, g: 0.1, b: 0, a: 0}
+  m_BuildTextureStacks: []

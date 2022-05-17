@@ -10,6 +10,7 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private float timeToSpawn = 1f;
     private float _timer;
     [SerializeField] private List<GameObject> asteroids;
+    [SerializeField] private GameObject asteroidCloneFather;
     void Start()
     {
         
@@ -24,8 +25,15 @@ public class AsteroidSpawner : MonoBehaviour
             _timer = timeToSpawn;
             var index = Random.Range(0, asteroids.Capacity);
             var currAsteroid = asteroids[index];
-            Instantiate(currAsteroid, transform.position, quaternion.identity); 
+            var pos = PositionToSpawn();
+            var newAstro = Instantiate(currAsteroid, pos, quaternion.identity);
+            newAstro.transform.SetParent(asteroidCloneFather.transform);
         }
         
+    }
+
+    private Vector3 PositionToSpawn()
+    {
+        return transform.position;
     }
 }
