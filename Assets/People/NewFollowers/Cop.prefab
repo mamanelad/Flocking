@@ -1733,6 +1733,7 @@ GameObject:
   - component: {fileID: 313408068442532759}
   - component: {fileID: 313408068442532758}
   - component: {fileID: 313408068442532752}
+  - component: {fileID: 7656628605261927343}
   m_Layer: 6
   m_Name: Cop
   m_TagString: Peep
@@ -1778,7 +1779,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6372332792325992407}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf5cc50c4cee94b2aacb6461ef32fc7e, type: 3}
   m_Name: 
@@ -1811,6 +1812,28 @@ MonoBehaviour:
   acceleration: 2
   deceleration: 1
   minSqrSpeed: 0.1
+--- !u!114 &7656628605261927343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372332792325992407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1a064d21ad87f40b4ac51f4975bbde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  peep: {fileID: 313408068442532752}
+  senseRadius: 3
+  navigationTimer:
+    duration: 0.1
+  navigationMask:
+    serializedVersion: 2
+    m_Bits: 448
+  peepTag: Peep
+  repelFromSameGroup: 0
+  alignmentFactor: 1
 --- !u!1 &6561160115573852796
 GameObject:
   m_ObjectHideFlags: 0

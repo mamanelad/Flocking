@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
                     instantiatePlayer = true;
                     Instantiate(player, newPos, Quaternion.identity);
                     numPlayersInstantiated += 1;
-                    peeps.Add(player);
+                    //peeps.Add(player);
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
@@ -75,7 +75,6 @@ public class GameManager : MonoBehaviour
                     peeps.Add(newPeep);
                     numPrefabsGroups[randomIndex] -= 1;
                     yield return new WaitForSeconds(0.2f);
-                    
                 }
             }
         }
