@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,16 +6,21 @@ using Avrahamy.Collections;
 using Flocking;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject player; // for now will be red leader
-    [SerializeField] private GameObject bluePlayer;
     
 
-    [SerializeField] private float width;
+    [SerializeField] private List<GameObject> prefabsGroups; // the prefabs of followers, one from each group - no player
+    [SerializeField] private List<int> numPrefabsGroups; // how much followers we want from each group
+    
+
+    [SerializeField] private float width; // width (=height) of the stage
     [SerializeField] private int numPlayersTotal; // including the player
 
+    
     private List<GameObject> peeps = new List<GameObject>();
     private int numPlayersInstantiated = 0;
     
@@ -54,14 +60,20 @@ public class GameManager : MonoBehaviour
                     instantiatePlayer = true;
                     Instantiate(player, newPos, Quaternion.identity);
                     numPlayersInstantiated += 1;
-                    peeps.Add(player);
+                    //peeps.Add(player);
                     yield return new WaitForSeconds(0.2f);
                 }
                 else
                 {
-                    var newPeep = Instantiate(bluePlayer, newPos, Quaternion.identity);
+                    int randomIndex = UnityEngine.Random.Range(0, prefabsGroups.Count);
+                    while (numPrefabsGroups[randomIndex] == 0)
+                    {
+                        randomIndex = UnityEngine.Random.Range(0, prefabsGroups.Count);
+                    }
+                    var newPeep = Instantiate(prefabsGroups[randomIndex], newPos, Quaternion.identity);
                     numPlayersInstantiated += 1;
                     peeps.Add(newPeep);
+                    numPrefabsGroups[randomIndex] -= 1;
                     yield return new WaitForSeconds(0.2f);
                 }
             }
