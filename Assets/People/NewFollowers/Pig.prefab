@@ -330,9 +330,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7857805033079567702}
+  - component: {fileID: 555852318530159366}
   m_Layer: 6
   m_Name: BaseAnimal
-  m_TagString: Untagged
+  m_TagString: Peep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -355,6 +356,20 @@ Transform:
   m_Father: {fileID: 7857805033133989609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!136 &555852318530159366
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7857805033079567703}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.7704009
+  m_Height: 1.5408018
+  m_Direction: 1
+  m_Center: {x: -0, y: 0, z: -0.018456578}
 --- !u!1 &7857805033121968255
 GameObject:
   m_ObjectHideFlags: 0

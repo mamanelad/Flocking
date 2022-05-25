@@ -1519,9 +1519,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9016855363619474089}
+  - component: {fileID: 7068709391933297364}
   m_Layer: 6
   m_Name: BaseCharacter
-  m_TagString: Untagged
+  m_TagString: Peep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1545,6 +1546,20 @@ Transform:
   m_Father: {fileID: 6363597793250255427}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!136 &7068709391933297364
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6156379310625834794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.0364442
+  m_Direction: 1
+  m_Center: {x: -0, y: 0.00085282326, z: -0}
 --- !u!1 &6297521700596177555
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Flocking;
 using Object = System.Object;
 using Random = UnityEngine.Random;
 
@@ -12,12 +13,18 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private GameObject explosionEffect;
     private bool hadExplode;
     private GameObject currExplosion;
+    private MeshRenderer meshRenderer;
 
+
+     private GameManager gameManager;
 
     void Start()
     {
         SetTumble();
         GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * tumble;
+        gameManager = FindObjectOfType<GameManager>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        FindObjectOfType<AudioManager>().PlaySound("Fall");
     }
 
     private void Update()
@@ -39,6 +46,14 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            // KillPeep(other.gameObject);
+            gameManager.GameFinish(false);
+
+        }
+
+        
         if (other.gameObject.CompareTag("Peep"))
         {
             KillPeep(other.gameObject);
@@ -50,11 +65,13 @@ public class Asteroid : MonoBehaviour
             Explode();
             Destroy(other.gameObject);
         }
-        
+
     }
 
     private void Explode()
     {
+        FindObjectOfType<AudioManager>().PlaySound("Hit");
+        meshRenderer.enabled = false;
         var transform1 = transform;
         currExplosion = Instantiate(explosionEffect, transform1.position, transform1.rotation);
         
@@ -63,11 +80,14 @@ public class Asteroid : MonoBehaviour
     private void DestroyAsteroid()
     {
         Destroy(currExplosion);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     private void KillPeep(GameObject peepToKill)
     {
-        Destroy(peepToKill);
+        FindObjectOfType<AudioManager>().PlaySound("Scream");
+        Destroy(peepToKill.GetComponentInParent<FollowerPeepController>().gameObject);
+        gameManager.numPlayersTotal -= 1;
+
     }
 }

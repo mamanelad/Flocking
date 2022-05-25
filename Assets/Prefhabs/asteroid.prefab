@@ -4901,6 +4901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTumble: 20
-  timeToDestroy: 2
+  timeToDestroy: 1.5
   explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
     type: 3}

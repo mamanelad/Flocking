@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
 {
+    [SerializeField] private float speed = 20f;
     private GameObject[] Peeps;
     [SerializeField] private float timeToSpawnTarget = 3f;
     private float timerTarget;
@@ -14,6 +15,7 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private GameObject _target;
     private Vector3 currTargetPosition;
 
+    [SerializeField] private GameManager gameManager;
     private bool spawnAsteroid;
     [SerializeField] private float timeDifferenceTargetAsteroid  = .3f;
     private float timerAsteroid;
@@ -57,8 +59,8 @@ public class AsteroidSpawner : MonoBehaviour
         var newAstro = Instantiate(currAsteroid, pos, quaternion.identity);
         newAstro.transform.SetParent(asteroidCloneFather.transform);
         
-        var direction = currTargetPosition - gameObject.transform.position;
-        newAstro.GetComponent<Rigidbody>().velocity = 1 * direction;
+        var direction = (currTargetPosition - gameObject.transform.position).normalized;
+        newAstro.GetComponent<Rigidbody>().velocity = speed * direction;
         spawnAsteroid = false;
     }
 
