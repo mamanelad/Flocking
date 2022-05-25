@@ -556,7 +556,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2397674045635308275}
   - component: {fileID: 2397674045635308287}
-  - component: {fileID: 2397674045635308286}
   - component: {fileID: 2397674045635308273}
   - component: {fileID: 2397674045635308272}
   m_Layer: 6
@@ -626,14 +625,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2397674045635308286
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2397674045635308274}
-  m_Mesh: {fileID: 0}
 --- !u!222 &2397674045635308273
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -842,7 +833,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2397674046036206123}
   - component: {fileID: 2397674046036206295}
-  - component: {fileID: 2397674046036206294}
   - component: {fileID: 2397674046036206121}
   - component: {fileID: 2397674046036206120}
   m_Layer: 6
@@ -912,14 +902,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2397674046036206294
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2397674046036206122}
-  m_Mesh: {fileID: 0}
 --- !u!222 &2397674046036206121
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2503,7 +2485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc40d627abf7c45db995f5ba5ef1337e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: 0
+  group: 1
   maxSpeed: 10
   rotationSpeed: 0.2
   acceleration: 2
@@ -2590,7 +2572,7 @@ GameObject:
   - component: {fileID: 5970254203242345532}
   m_Layer: 6
   m_Name: BaseCharacter
-  m_TagString: Untagged
+  m_TagString: Peep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -217,7 +217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1292578350853916857
 Transform:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3913403252373930757
 Transform:
   m_ObjectHideFlags: 0
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 2934634246483386059}
   - component: {fileID: 7892780810656098605}
   - component: {fileID: 7892780810656098607}
-  - component: {fileID: 7892780810656098606}
+  - component: {fileID: 8753501511515667052}
   m_Layer: 6
   m_Name: Knight
   m_TagString: Peep
@@ -681,7 +681,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2920288451382956895}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -712,18 +712,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2920288451382956895}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc40d627abf7c45db995f5ba5ef1337e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: 0
+  group: 2
   maxSpeed: 10
   rotationSpeed: 0.2
   acceleration: 2
   deceleration: 1
   minSqrSpeed: 0.1
---- !u!114 &7892780810656098606
+--- !u!114 &8753501511515667052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2060,7 +2060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1211192005680321007
 Transform:
   m_ObjectHideFlags: 0

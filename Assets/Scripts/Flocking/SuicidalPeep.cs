@@ -6,7 +6,7 @@ using BitStrap;
 
 namespace Flocking
 {
-    public class FollowerPeepController : MonoBehaviour
+    public class SuicidalPeep : MonoBehaviour
     {
         [SerializeField] PeepController peep;
         [SerializeField] float senseRadius = 2f;
@@ -116,7 +116,7 @@ namespace Flocking
             }
         }
 
-        private void Alignment()
+        private void Alignment() // go in same direction
         {
             if (curColliderHit.CompareTag(peepTag))
             {
@@ -133,7 +133,7 @@ namespace Flocking
             }
         }
 
-        private void Cohesion()
+        private void Cohesion() // get closer
         {
             if (curColliderHit.CompareTag(peepTag))
             {
@@ -161,8 +161,8 @@ namespace Flocking
             //Final calculation for the Cohesion vector.
             avgDirectionCohesion /= hits;
             avgDirectionCohesion = (avgDirectionCohesion - transform.position);
-
-
+            
+            
             avgDirectionMain = avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion;
         }
 
@@ -205,6 +205,12 @@ namespace Flocking
             FinalDirection();
             if (avgDirectionMain.sqrMagnitude < 0.1f) return;
 
+            
+            {
+                
+                peep.DesiredVelocity = avgDirectionMain.normalized.ToVector2XZ();
+            }
+                
             peep.DesiredVelocity = avgDirectionMain.normalized.ToVector2XZ();
         }
         

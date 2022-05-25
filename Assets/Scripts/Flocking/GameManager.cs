@@ -11,15 +11,10 @@ public class GameManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject player; // for now will be red leader
-    
-
     [SerializeField] private List<GameObject> prefabsGroups; // the prefabs of followers, one from each group - no player
     [SerializeField] private List<int> numPrefabsGroups; // how much followers we want from each group
-    
-
     [SerializeField] private float width; // width (=height) of the stage
     [SerializeField] private int numPlayersTotal; // including the player
-
     
     private List<GameObject> peeps = new List<GameObject>();
     private int numPlayersInstantiated = 0;
@@ -60,8 +55,7 @@ public class GameManager : MonoBehaviour
                     instantiatePlayer = true;
                     Instantiate(player, newPos, Quaternion.identity);
                     numPlayersInstantiated += 1;
-                    //peeps.Add(player);
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.05f);
                 }
                 else
                 {
@@ -74,7 +68,7 @@ public class GameManager : MonoBehaviour
                     numPlayersInstantiated += 1;
                     peeps.Add(newPeep);
                     numPrefabsGroups[randomIndex] -= 1;
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(0.05f);
                 }
             }
         }

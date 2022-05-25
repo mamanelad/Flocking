@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 7857805033079567702}
   m_Layer: 6
   m_Name: BaseAnimal
-  m_TagString: Untagged
+  m_TagString: Peep
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc40d627abf7c45db995f5ba5ef1337e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: 0
+  group: 3
   maxSpeed: 10
   rotationSpeed: 0.2
   acceleration: 2
