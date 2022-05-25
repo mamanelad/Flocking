@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Avrahamy;
@@ -8,33 +9,81 @@ namespace Flocking
 {
     public class FollowerPeepController : MonoBehaviour
     {
+        enum FollowerKind
+        {
+            Crazy, // Just walk crazy on the field.
+            Suicide, // Will go toward danger
+            Runner, // Run away from danger
+            Friendly, // Just go with his friends around him 
+            Annoying // Will find the player and annoy him.
+        }
+
+
+        #region Private Fields
+
+        private GameObject player;
+        private FollowerKind followerKind;
+        private Collider curColliderHit;
+        private int hits; // Save the amount of colliders stored into the results buffer of the Sphere.
+        private Vector3 avgDirectionMain;
+        private Vector3 avgDirectionSeparation;
+        private Vector3 avgDirectionAlignment;
+        private Vector3 avgDirectionCohesion;
+
+        private readonly List<FollowerKind> followerKinds = new List<FollowerKind>();
+        private static readonly Collider[] ColliderResults = new Collider[10];
+
+        #endregion
+
+        #region Inspector Control
+
+        [Header("Regular Flocking Settings")] 
+        
         [SerializeField] PeepController peep;
         [SerializeField] float senseRadius = 2f;
         [SerializeField] PassiveTimer navigationTimer;
         [SerializeField] LayerMask navigationMask;
         [TagSelector] [SerializeField] string peepTag;
         [SerializeField] bool repelFromSameGroup;
+        [SerializeField] private float alignmentFactor = 1f;
 
+        [Header("Special Flocking Settings")]
+        [SerializeField] private float crazyRange = 100f;
+        [SerializeField] private float suicideFactor = 0.2f;
+        [SerializeField] private float runnerFactor = 1f;
+        [SerializeField] private float runnerMinDistance = 6f;
+        [SerializeField] private float annoyingFactor = 0.8f;
+        [SerializeField] private float annoyingMinDistance = 4f;
 
-        private Collider curColliderHit;
-        private int hits; // Save the amount of colliders stored into the results buffer of the Sphere.
+        #endregion
 
-        [SerializeField] private float alignmentFactor = 1f;  
-        
-        private Vector3 avgDirectionMain;
-        private Vector3 avgDirectionSeparation;
-        private Vector3 avgDirectionAlignment;
-        private Vector3 avgDirectionCohesion;
-
-
-        private static readonly Collider[] COLLIDER_RESULTS = new Collider[10];
 
         protected void Reset()
         {
             if (peep == null)
-            {
                 peep = GetComponent<PeepController>();
+        }
+
+        private void Start()
+        {
+            InitializeKinds();
+            player = GameObject.FindWithTag("Player");
+            if (player == null)
+            {
+                print("no game object with tag player!!!");
             }
+        }
+
+        private void InitializeKinds()
+        {
+            followerKinds.Add(FollowerKind.Crazy);
+            followerKinds.Add(FollowerKind.Suicide);
+            followerKinds.Add(FollowerKind.Runner);
+            followerKinds.Add(FollowerKind.Friendly);
+            followerKinds.Add(FollowerKind.Annoying);
+            var index = Random.Range(0, followerKinds.Count);
+
+            followerKind = followerKinds[index];
         }
 
         protected void OnEnable()
@@ -54,7 +103,7 @@ namespace Flocking
                 // Sensed another peep.
                 var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
                 // Ignore peeps that are not from this group.
-                if (otherPeed.Group != peep.Group) return;
+                // if (otherPeed.Group != peep.Group) return;
                 repel = repelFromSameGroup;
             }
 
@@ -122,13 +171,6 @@ namespace Flocking
             {
                 // Sensed another peep.
                 var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
-                // Ignore peeps that are not from this group.
-                if (otherPeed.Group != peep.Group) return;
-
-                //option 1 for alignment
-                // avgDirectionAlignment +=  (Vector3) otherPeed.GetForwardVelocity();
-                
-                //option 2 for alignment
                 avgDirectionAlignment += (Vector3) otherPeed.Velocity;
             }
         }
@@ -137,8 +179,6 @@ namespace Flocking
         {
             if (curColliderHit.CompareTag(peepTag))
             {
-                var otherPeed = curColliderHit.attachedRigidbody.GetComponent<PeepController>();
-                if (otherPeed.Group != peep.Group) return;
                 avgDirectionCohesion += curColliderHit.transform.position;
             }
         }
@@ -146,26 +186,74 @@ namespace Flocking
         private void FinalDirection()
         {
             //Final calculation for the Alignment vector.
-            //option 1 for alignment
-            // avgDirectionAlignment.x /= hits;
-            // avgDirectionAlignment.y /= hits;
-            
-            //If we want to normalize them. 
-            // avgDirectionSeparation.Normalize();
-            // avgDirectionAlignment.Normalize();
-            // avgDirectionCohesion.Normalize();
-            
             avgDirectionAlignment = new Vector3(avgDirectionAlignment.x * alignmentFactor,
                 avgDirectionAlignment.y * alignmentFactor, avgDirectionAlignment.z * alignmentFactor);
 
             //Final calculation for the Cohesion vector.
             avgDirectionCohesion /= hits;
             avgDirectionCohesion = (avgDirectionCohesion - transform.position);
-            
-            
-            avgDirectionMain = avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion;
+
+
+            avgDirectionMain = (avgDirectionSeparation + avgDirectionAlignment + avgDirectionCohesion).normalized;
         }
 
+        private void SpecialAddDirection()
+        {
+            var target = GameObject.FindWithTag("Target");
+            annoyingMinDistance += Time.deltaTime;
+            runnerMinDistance -= Time.deltaTime / 2;
+            switch (followerKind)
+            {
+                case FollowerKind.Suicide:
+                    if (target != null)
+                    {
+                        var dir = (target.transform.position - transform.position);
+                        dir = new Vector3(dir.x * suicideFactor, 0, dir.z * suicideFactor);
+                        avgDirectionMain += dir;
+                    }
+
+                    break;
+
+                case FollowerKind.Annoying:
+                    if (player != null)
+                    {
+                        var dist = Vector3.Distance(player.transform.position, transform.position);
+                        if (dist <= annoyingMinDistance)
+                        {
+                            var dir = (player.transform.position - transform.position);
+                            dir = new Vector3(dir.x * annoyingFactor, 0, dir.z * annoyingFactor);
+                            avgDirectionMain += dir;
+                        }
+                    }
+
+                    break;
+
+
+                case FollowerKind.Crazy:
+                    var x = Random.Range(-crazyRange, crazyRange);
+                    var z = Random.Range(-crazyRange, crazyRange);
+                    avgDirectionMain += new Vector3(x, 0, z);
+                    break;
+
+                case FollowerKind.Runner:
+                    if (target != null)
+                    {
+                        var dist = Vector3.Distance(target.transform.position, transform.position);
+                        if (dist <= runnerMinDistance)
+                        {
+                            var dir = (target.transform.position - transform.position);
+                            dir = new Vector3(dir.x * runnerFactor, 0, dir.z * runnerFactor);
+                            avgDirectionMain = -dir;
+                        }
+                    }
+
+                    break;
+
+                case FollowerKind.Friendly:
+                    avgDirectionMain += avgDirectionCohesion + avgDirectionAlignment;
+                    break;
+            }
+        }
 
         protected void Update()
         {
@@ -178,7 +266,7 @@ namespace Flocking
             hits = Physics.OverlapSphereNonAlloc(
                 position,
                 senseRadius,
-                COLLIDER_RESULTS,
+                ColliderResults,
                 navigationMask.value);
 
             // There will always be at least one hit on our own collider.
@@ -190,9 +278,9 @@ namespace Flocking
             avgDirectionAlignment = Vector3.zero;
             avgDirectionCohesion = Vector3.zero;
 
-            for (int i = 0; i < hits; i++)
+            for (var i = 0; i < hits; i++)
             {
-                curColliderHit = COLLIDER_RESULTS[i];
+                curColliderHit = ColliderResults[i];
                 // Ignore self.
                 if (curColliderHit.attachedRigidbody != null &&
                     curColliderHit.attachedRigidbody.gameObject == peep.gameObject) continue;
@@ -203,9 +291,9 @@ namespace Flocking
             }
 
 
-            
-            
             FinalDirection();
+            SpecialAddDirection();
+
             if (avgDirectionMain.sqrMagnitude < 0.1f) return;
 
             peep.DesiredVelocity = avgDirectionMain.normalized.ToVector2XZ();
@@ -223,8 +311,3 @@ namespace Flocking
         }
     }
 }
-
-
-
-
-

@@ -1368,14 +1368,14 @@ ParticleSystem:
         ctime0: 0
         ctime1: 2506
         ctime2: 7325
-        ctime3: 21974
+        ctime3: 15998
         ctime4: 31033
         ctime5: 0
         ctime6: 0
         ctime7: 0
         atime0: 0
         atime1: 10023
-        atime2: 28720
+        atime2: 19853
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -4868,10 +4868,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.4377396
-  m_Height: 2.6509066
+  m_Radius: 1.6911628
+  m_Height: 3.487917
   m_Direction: 1
-  m_Center: {x: 0.18410891, y: -0.10600637, z: -0.0466181}
+  m_Center: {x: 0.18410897, y: -0.10600639, z: 0.20680524}
 --- !u!54 &7611121024279074730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4901,6 +4901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTumble: 20
-  timeToDestroy: 1.5
+  timeToDestroy: 3
   explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
     type: 3}

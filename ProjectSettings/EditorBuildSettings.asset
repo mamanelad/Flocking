@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Flocking/Scenes/MainMenu.unity
     guid: 836a8919711efde468c4a5f7f97f9a7a
   - enabled: 1
-    path: Assets/Flocking/Scenes/elad.unity
+    path: Assets/Flocking/Scenes/Main.unity
     guid: 2428d72d1ba6bef4a8fd86e7672e9d57
   m_configObjects: {}
