@@ -231,9 +231,9 @@ MonoBehaviour:
   - {fileID: 2920288451382956895, guid: 338d9c80e80b94748919a34ed5c1adce, type: 3}
   - {fileID: 6372332792325992407, guid: 3a60b7fda0c5af74baffc1feca849136, type: 3}
   - {fileID: 8617574491070812482, guid: a0e3abfd9bfcbf648b27a6217767ff88, type: 3}
-  - {fileID: 2145933543}
+  - {fileID: 7857805033133989614, guid: 6c638e4433865d640abe36f7f1607959, type: 3}
   - {fileID: 1669652249245456745, guid: 17c619d50305716479c501f6c2883f4a, type: 3}
-  numPrefabsGroups: 0000000000000000000000001800000000000000
+  numPrefabsGroups: 0000000000000000180000000000000000000000
   width: 30
   numPlayersTotal: 25
 --- !u!4 &110219635
@@ -1659,8 +1659,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060872465}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2145933543 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5219340263846539878, guid: b611b1d61d03f452eb7bd33f484e0b98, type: 3}
-  m_PrefabInstance: {fileID: 64337284}
-  m_PrefabAsset: {fileID: 0}
